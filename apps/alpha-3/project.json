@@ -1,0 +1,9 @@
+{
+  "name": "alpha-3",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/alpha-3",
+  "projectType": "application",
+  "tags": [],
+  "// targets": "to see all targets run: nx show project alpha-3 --web",
+  "targets": {}
+}
