@@ -14,7 +14,12 @@
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
-    "paths": {}
+    "paths": {
+      "@alpha-3/ui": ["libs/ui/src/index.ts"],
+      "@alpha-3/ui/server": ["libs/ui/src/server.ts"],
+      "@alpha-3/utils": ["libs/utils/src/index.ts"],
+      "@alpha-3/utils/server": ["libs/utils/src/server.ts"]
+    }
   },
   "exclude": ["node_modules", "tmp"]
 }

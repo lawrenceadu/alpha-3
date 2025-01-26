@@ -1,0 +1,25 @@
+{
+  "schema": {
+    "isRequired": "{field} is required",
+    "onlyNumbers": "Only numbers allowed",
+    "onlyStrings": "Only alphabets allowed",
+    "enterValid": "Enter a valid {field}",
+    "minimum": "Must be at least {length} characters",
+    "file": {
+      "tooLarge": "{field} size is too large",
+      "unsupported": "Unsupported file format"
+    },
+    "password": {
+      "format": "Must contain a lower case and upper case letter and number",
+      "minimum": "Password must be at least {length} characters"
+    },
+    "fullname": {
+      "format": "Please enter a valid first name and last name",
+      "minimum": "Name must have at least 3 characters"
+    },
+    "otp": {
+      "format": "Must be only digits",
+      "minimum": "Must be exactly {length} digits"
+    }
+  }
+}
