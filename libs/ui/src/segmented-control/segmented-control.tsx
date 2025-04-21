@@ -13,12 +13,16 @@ import { cnExt } from '@alpha-3/utils';
 const SegmentedControlRoot = TabsPrimitive.Root;
 SegmentedControlRoot.displayName = 'SegmentedControlRoot';
 
-const SegmentedControlList = React.forwardRef<
-  React.ComponentRef<typeof TabsPrimitive.List>,
-  React.ComponentPropsWithoutRef<typeof TabsPrimitive.List> & {
-    floatingBgClassName?: string;
-  }
->(({ children, className, floatingBgClassName, ...rest }, forwardedRef) => {
+const SegmentedControlList = ({
+  children,
+  className,
+  floatingBgClassName,
+  ref,
+  ...rest
+}: React.ComponentPropsWithoutRef<typeof TabsPrimitive.List> & {
+  floatingBgClassName?: string;
+  ref?: React.Ref<HTMLDivElement>;
+}) => {
   const [lineStyle, setLineStyle] = React.useState({ width: 0, left: 0 });
 
   const { mounted, listRef } = useTabObserver({
@@ -30,7 +34,7 @@ const SegmentedControlList = React.forwardRef<
 
   return (
     <TabsPrimitive.List
-      ref={mergeRefs(forwardedRef, listRef)}
+      ref={mergeRefs(ref, listRef)}
       className={cnExt(
         'relative isolate grid w-full auto-cols-fr grid-flow-col gap-1 rounded-10 bg-bg-weak-50 p-1',
         className
@@ -57,16 +61,19 @@ const SegmentedControlList = React.forwardRef<
       />
     </TabsPrimitive.List>
   );
-});
+};
 SegmentedControlList.displayName = 'SegmentedControlList';
 
-const SegmentedControlTrigger = React.forwardRef<
-  React.ComponentRef<typeof TabsPrimitive.Trigger>,
-  React.ComponentPropsWithoutRef<typeof TabsPrimitive.Trigger>
->(({ className, ...rest }, forwardedRef) => {
+const SegmentedControlTrigger = ({
+  className,
+  ref,
+  ...rest
+}: React.ComponentPropsWithoutRef<typeof TabsPrimitive.Trigger> & {
+  ref?: React.Ref<HTMLButtonElement>;
+}) => {
   return (
     <TabsPrimitive.Trigger
-      ref={forwardedRef}
+      ref={ref}
       className={cnExt(
         // base
         'peer',
@@ -82,15 +89,17 @@ const SegmentedControlTrigger = React.forwardRef<
       {...rest}
     />
   );
-});
+};
 SegmentedControlTrigger.displayName = 'SegmentedControlTrigger';
 
-const SegmentedControlContent = React.forwardRef<
-  React.ComponentRef<typeof TabsPrimitive.Content>,
-  React.ComponentPropsWithoutRef<typeof TabsPrimitive.Content>
->(({ ...rest }, forwardedRef) => {
-  return <TabsPrimitive.Content ref={forwardedRef} {...rest} />;
-});
+const SegmentedControlContent = ({
+  ref,
+  ...rest
+}: React.ComponentPropsWithoutRef<typeof TabsPrimitive.Content> & {
+  ref?: React.Ref<HTMLDivElement>;
+}) => {
+  return <TabsPrimitive.Content ref={ref} {...rest} />;
+};
 SegmentedControlContent.displayName = 'SegmentedControlContent';
 
 export {

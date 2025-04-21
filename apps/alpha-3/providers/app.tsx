@@ -1,11 +1,11 @@
 'use client';
 
 import React, { ReactNode } from 'react';
-import { AppProgressBar as ProgressBar } from 'next-nprogress-bar';
+import { AppProgressProvider } from '@bprogress/next';
 import { useTranslations } from 'next-intl';
+import { http, validator } from '@alpha-3/utils';
 import { ToastContainer } from 'react-toastify';
 import { SWRConfig } from 'swr';
-import { http, validator } from '@alpha-3/utils';
 
 function AppProvider({ children }: { children: ReactNode }) {
   /**
@@ -34,13 +34,14 @@ function AppProvider({ children }: { children: ReactNode }) {
         revalidateOnFocus: false,
       }}
     >
-      {children}
-      <ToastContainer hideProgressBar newestOnTop />
-      <ProgressBar
+      <AppProgressProvider
+        shallowRouting
         color="#07893B"
         options={{ showSpinner: false }}
-        shallowRouting
-      />
+      >
+        {children}
+      </AppProgressProvider>
+      <ToastContainer hideProgressBar newestOnTop />
     </SWRConfig>
   );
 }

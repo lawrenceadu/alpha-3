@@ -11,39 +11,40 @@ TabMenuVerticalContent.displayName = 'TabMenuVerticalContent';
 type TabMenuVerticalRootProps = Omit<
   React.ComponentPropsWithoutRef<typeof TabsPrimitive.Root>,
   'orientation'
->;
+> & { ref?: React.Ref<HTMLDivElement> };
 
-const TabMenuVerticalRoot = React.forwardRef<
-  React.ComponentRef<typeof TabsPrimitive.Root>,
-  TabMenuVerticalRootProps
->(({ ...rest }, forwardedRef) => {
-  return (
-    <TabsPrimitive.Root ref={forwardedRef} orientation="vertical" {...rest} />
-  );
-});
+const TabMenuVerticalRoot = ({ ref, ...rest }: TabMenuVerticalRootProps) => {
+  return <TabsPrimitive.Root ref={ref} orientation="vertical" {...rest} />;
+};
 TabMenuVerticalRoot.displayName = 'TabMenuVerticalRoot';
 
-const TabMenuVerticalList = React.forwardRef<
-  React.ComponentRef<typeof TabsPrimitive.List>,
-  React.ComponentPropsWithoutRef<typeof TabsPrimitive.List>
->(({ className, ...rest }, forwardedRef) => {
+const TabMenuVerticalList = ({
+  className,
+  ref,
+  ...rest
+}: React.ComponentPropsWithoutRef<typeof TabsPrimitive.List> & {
+  ref?: React.Ref<HTMLDivElement>;
+}) => {
   return (
     <TabsPrimitive.List
-      ref={forwardedRef}
+      ref={ref}
       className={cnExt('w-full space-y-2', className)}
       {...rest}
     />
   );
-});
+};
 TabMenuVerticalList.displayName = 'TabMenuVerticalList';
 
-const TabMenuVerticalTrigger = React.forwardRef<
-  React.ComponentRef<typeof TabsPrimitive.Trigger>,
-  React.ComponentPropsWithoutRef<typeof TabsPrimitive.Trigger>
->(({ className, ...rest }, forwardedRef) => {
+const TabMenuVerticalTrigger = ({
+  className,
+  ref,
+  ...rest
+}: React.ComponentPropsWithoutRef<typeof TabsPrimitive.Trigger> & {
+  ref?: React.Ref<HTMLButtonElement>;
+}) => {
   return (
     <TabsPrimitive.Trigger
-      ref={forwardedRef}
+      ref={ref}
       className={cnExt(
         // base
         'group/tab-item w-full rounded-lg p-2 text-left text-label-sm text-text-sub-600 outline-none',
@@ -60,7 +61,7 @@ const TabMenuVerticalTrigger = React.forwardRef<
       {...rest}
     />
   );
-});
+};
 TabMenuVerticalTrigger.displayName = 'TabMenuVerticalTrigger';
 
 function TabMenuVerticalIcon<T extends React.ElementType>({

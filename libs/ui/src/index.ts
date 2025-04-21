@@ -39,3 +39,5 @@ export * as ProgressCircle from './progress-circle/progress-circle';
 export * as DotStepper from './dot-stepper/dot-stepper';
 export * as HorizontalStepper from './horizontal-stepper/horizontal-stepper';
 export * as VerticalStepper from './vertical-stepper/vertical-stepper';
+export * as Popover from './popover/popover';
+export * as Datepicker from './datepicker/datepicker';
