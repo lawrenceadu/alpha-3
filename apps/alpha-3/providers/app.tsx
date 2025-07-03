@@ -4,7 +4,6 @@ import React, { ReactNode } from 'react';
 import { AppProgressProvider } from '@bprogress/next';
 import { useTranslations } from 'next-intl';
 import { http, validator } from '@alpha-3/utils';
-import { ToastContainer } from 'react-toastify';
 import { SWRConfig } from 'swr';
 
 function AppProvider({ children }: { children: ReactNode }) {
@@ -41,7 +40,6 @@ function AppProvider({ children }: { children: ReactNode }) {
       >
         {children}
       </AppProgressProvider>
-      <ToastContainer hideProgressBar newestOnTop />
     </SWRConfig>
   );
 }

@@ -1,10 +1,11 @@
-import { getMessages, setRequestLocale } from 'next-intl/server';
 import { NextIntlClientProvider } from 'next-intl';
+import { cn, ConfirmMountPoint } from '@alpha-3/utils';
 import { Inter as FontSans } from 'next/font/google';
+import { setRequestLocale } from 'next-intl/server';
+import { hasLocale } from 'next-intl';
 import { notFound } from 'next/navigation';
 import { Metadata } from 'next';
-
-import { cn } from '@alpha-3/utils';
+import { Toaster } from '@alpha-3/ui';
 
 import { routing } from '../../i18n/routing';
 import AppProvider from '../../providers/app';
@@ -34,14 +35,9 @@ export default async function Layout({
 }) {
   const { locale } = await params;
 
-  // Ensure that the incoming `locale` is valid
-  if (!routing.locales.includes(locale as any)) {
+  if (!hasLocale(routing.locales, locale)) {
     notFound();
   }
-
-  // Providing all messages to the client
-  // side is the easiest way to get started
-  const messages = await getMessages();
 
   // Enable static rendering
   setRequestLocale(locale);
@@ -49,10 +45,14 @@ export default async function Layout({
   return (
     <html lang={locale} className={cn(inter.variable, 'antialiased')}>
       <body className="h-full" suppressHydrationWarning={true}>
-        <NextIntlClientProvider messages={messages}>
+        <NextIntlClientProvider>
+          <ConfirmMountPoint />
+
           <AppProvider>
             <>{children}</>
           </AppProvider>
+
+          <Toaster position="top-right" />
         </NextIntlClientProvider>
       </body>
     </html>

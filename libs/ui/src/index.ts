@@ -41,3 +41,5 @@ export * as HorizontalStepper from './horizontal-stepper/horizontal-stepper';
 export * as VerticalStepper from './vertical-stepper/vertical-stepper';
 export * as Popover from './popover/popover';
 export * as Datepicker from './datepicker/datepicker';
+export * as AlertToast from './toast/toast-alert';
+export * from './toast/toast';

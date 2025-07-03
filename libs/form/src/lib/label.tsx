@@ -19,7 +19,7 @@ export function Label({
   className,
 }: LabelProps) {
   return (
-    <UiLabel.Root htmlFor={name} className={cnExt('mb-1', className)}>
+    <UiLabel.Root htmlFor={name} className={cnExt(className)}>
       {children}
       {required && <UiLabel.Asterisk />}
       {optional && <UiLabel.Sub>(Optional)</UiLabel.Sub>}

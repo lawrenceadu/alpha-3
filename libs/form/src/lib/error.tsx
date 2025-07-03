@@ -15,9 +15,5 @@ export function Error({ name }: { name: string }) {
     return null;
   }
 
-  return (
-    <Hint.Root hasError className="mt-1">
-      {error.message}
-    </Hint.Root>
-  );
+  return <Hint.Root hasError>{error.message}</Hint.Root>;
 }

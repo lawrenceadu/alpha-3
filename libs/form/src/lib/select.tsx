@@ -2,10 +2,10 @@
 
 import { useState } from 'react';
 import { Select as UiSelect, Input } from '@alpha-3/ui';
+import { RemixiconComponentType } from '@remixicon/react';
 import { useTranslations } from 'next-intl';
 import { useFormContext } from 'react-hook-form';
 import { cn, helper } from '@alpha-3/utils';
-import { RemixiconComponentType } from '@remixicon/react';
 
 export interface SelectProps {
   icon?: any;
@@ -33,7 +33,7 @@ export function Select({
   dsiabled,
   placeholder,
   triggerClassName,
-  withSearch = true,
+  withSearch = false,
   ...props
 }: SelectProps & { [x: string]: any }) {
   /**
@@ -84,7 +84,7 @@ export function Select({
         {withSearch && (
           <Input.Root
             size="xsmall"
-            className={cn('pb-1 mb-1', 'bg-white', 'sticky top-0 z-[1]')}
+            className={cn('pb-1 mb-1', 'sticky top-0 z-[1]')}
           >
             <Input.Wrapper>
               <Input.Input

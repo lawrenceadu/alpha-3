@@ -1,9 +1,10 @@
 'use client';
 
-import React, { Dispatch, FormEvent, JSX, SetStateAction, useEffect, useState } from 'react'; // prettier-ignore
+import React, { Dispatch, FormEvent, JSX, SetStateAction, useEffect, useRef, useState } from 'react'; // prettier-ignore
 import { FieldErrors, useForm, FormProvider, UseFormReset, UseFormSetValue, UseFormTrigger, Path, DefaultValues, UseFormRegister } from 'react-hook-form'; // prettier-ignore
 import { AnyObjectSchema, ObjectSchema } from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { isEqual } from 'lodash';
 
 export interface FormProps<T extends Record<string, any>> {
   initialValues: T;
@@ -22,6 +23,7 @@ export interface FormProps<T extends Record<string, any>> {
     values: T;
     register: UseFormRegister<T>;
     isValid: boolean;
+    isTouched: boolean;
     isSubmitting: boolean;
     handleSubmit: (e?: FormEvent<HTMLFormElement>) => void;
     errors: FieldErrors<T>;
@@ -34,10 +36,16 @@ export interface FormProps<T extends Record<string, any>> {
 export function HookForm<T extends Record<string, any>>({
   children,
   onSubmit,
-  initialValues,
+  initialValues: _initialValues,
   validationSchema,
   enableReinitialize,
 }: FormProps<T>): JSX.Element {
+  /**
+   * ref
+   */
+  const initialValues = useRef(_initialValues);
+  const isMounted = React.useRef<boolean>(false);
+
   /**
    * form
    */
@@ -45,7 +53,7 @@ export function HookForm<T extends Record<string, any>>({
     resolver: validationSchema
       ? yupResolver(validationSchema as AnyObjectSchema)
       : undefined,
-    defaultValues: initialValues as DefaultValues<T>,
+    defaultValues: initialValues.current as DefaultValues<T>,
   });
 
   /**
@@ -63,7 +71,7 @@ export function HookForm<T extends Record<string, any>>({
     register,
     getValues,
     handleSubmit,
-    formState: { errors, isValid },
+    formState: { errors, isValid, isDirty },
   } = methods;
 
   /**
@@ -81,10 +89,24 @@ export function HookForm<T extends Record<string, any>>({
   };
 
   useEffect(() => {
-    if (enableReinitialize) {
-      reset(initialValues);
+    isMounted.current = true;
+
+    return () => {
+      isMounted.current = false;
+    };
+  }, []);
+
+  useEffect(() => {
+    if (
+      isMounted.current === true &&
+      !isEqual(initialValues.current, _initialValues)
+    ) {
+      if (enableReinitialize) {
+        initialValues.current = _initialValues;
+        reset(initialValues.current);
+      }
     }
-  }, [enableReinitialize, initialValues]);
+  }, [enableReinitialize, _initialValues, reset]);
 
   return (
     <FormProvider {...methods}>
@@ -94,6 +116,7 @@ export function HookForm<T extends Record<string, any>>({
         register,
         isSubmitting,
         resetForm: reset,
+        isTouched: isDirty,
         values: getValues() as T,
         setFieldTouched: trigger,
         setFieldValue: methods.setValue,

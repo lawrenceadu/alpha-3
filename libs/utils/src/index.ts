@@ -8,3 +8,4 @@ export * from './client/cn';
 export * from './client/tv';
 export * from './client/recursive-clone-children';
 export * from './client/polymorphic';
+export * from './client/confirm';

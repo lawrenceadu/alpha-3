@@ -9,7 +9,7 @@ import { CountryCode } from 'libphonenumber-js';
 import PhoneInput from 'react-phone-number-input/react-hook-form-input';
 import Image from 'next/image';
 
-const DEFAULTCOUNTRY = 'KE';
+const DEFAULTCOUNTRY = 'GH';
 
 export interface PhoneProps {
   name?: string;

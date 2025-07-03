@@ -4,7 +4,10 @@
     "onlyNumbers": "Only numbers allowed",
     "onlyStrings": "Only alphabets allowed",
     "enterValid": "Enter a valid {field}",
-    "minimum": "Must be at least {length} characters",
+    "maximum": "Must be at least {length} characters",
+    "minimum": "Cannot be less that {length} characters",
+    "minItem": "{field} must have at least {count} item",
+    "maxItem": "{field} cannot be more than {count} item",
     "file": {
       "tooLarge": "{field} size is too large",
       "unsupported": "Unsupported file format"
@@ -21,5 +24,8 @@
       "format": "Must be only digits",
       "minimum": "Must be exactly {length} digits"
     }
+  },
+  "home": {
+    "title": "hi"
   }
 }

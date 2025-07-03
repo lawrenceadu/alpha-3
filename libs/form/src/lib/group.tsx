@@ -18,7 +18,7 @@ export function Group({
   ...props
 }: GroupProps) {
   return (
-    <div className={cn(className)} {...props}>
+    <div className={cn('space-y-1', className)} {...props}>
       {React.Children.map(children, (child: React.ReactNode, index) => {
         if (!React.isValidElement(child)) {
           return child;

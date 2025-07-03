@@ -1,31 +1,20 @@
 'use client';
 
-import {
-  string,
-  number,
-  mixed,
-  array,
-  StringSchema,
-  NumberSchema,
-  MixedSchema,
-} from 'yup';
-import {
-  isValidPhoneNumber,
-  isPossiblePhoneNumber,
-} from 'react-phone-number-input';
+import { string, number, mixed, array, StringSchema, NumberSchema, MixedSchema } from 'yup'; // prettier-ignore
+import { isValidPhoneNumber, isPossiblePhoneNumber } from 'react-phone-number-input'; // prettier-ignore
+import { useTranslations } from 'next-intl';
 
 /**
  * regex
  */
-const urlRegex =
-  /^((http|https):\/\/)?(www.)?(?!.*(http|https|www.))[a-zA-Z0-9_-]+(\.[a-zA-Z]+)+(\/)?.([\w?[a-zA-Z-_%/@?]+)*([^/\w?[a-zA-Z0-9_-]+=\w+(&[a-zA-Z0-9_]+=\w+)*)?$/;
-
+const urlRegex    = /^((http|https):\/\/)?(www.)?(?!.*(http|https|www.))[a-zA-Z0-9_-]+(\.[a-zA-Z]+)+(\/)?.([\w?[a-zA-Z-_%/@?]+)*([^/\w?[a-zA-Z0-9_-]+=\w+(&[a-zA-Z0-9_]+=\w+)*)?$/; // prettier-ignore
+const emailRegex = /^([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}|)$/;
 const stringRegex = /^[-a-zA-Z_ ]+$/;
 
 /**
  * injectors
  */
-let t: (...props: any) => string;
+let t: ReturnType<typeof useTranslations>;
 
 const injectTranslate = (_t: typeof t) => {
   t = _t;
@@ -59,7 +48,7 @@ const requireNumber = (
     ? schema
         .min(0, 'Cannot be less than zero')
         .required(t?.('isRequired', { field }))
-    : schema;
+    : schema.min(0, 'Cannot be less than zero');
 };
 
 const requireString = (
@@ -113,7 +102,7 @@ const requireEmail = (
   required = true,
   schema: StringSchema = string()
 ) => {
-  schema = schema.email(t?.('enterValid', { field }));
+  schema = schema.matches(emailRegex, t?.('enterValid', { field }));
   return required ? schema.required(t?.('isRequired', { field })) : schema;
 };
 
@@ -122,7 +111,9 @@ const requireEmail = (
  */
 const requireArray = (field: string, required = true, schema = array()) => {
   return required
-    ? schema.min(1).required(t?.('isRequired', { field }))
+    ? schema
+        .min(1, t?.('minItem', { field, count: 1 }))
+        .required(t?.('isRequired', { field }))
     : schema;
 };
 
